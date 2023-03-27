@@ -1,5 +1,5 @@
 import pandas as pd
-df = pd.read_csv(r"/Users/aliimran/Desktop/DSA Project/Courses.csv")
+df = pd.read_csv(r"https://raw.githubusercontent.com/hamzarazaa/DSA-Proj-Main/main/Courses.csv")
 data = df.values.tolist()
 
 def Time_table_generator(data):
