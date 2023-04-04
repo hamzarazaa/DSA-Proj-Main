@@ -102,11 +102,9 @@ def main(): # This is the function that we have to turn into a form or any app
     current_timetable = {}
     all_timetables = []
     generate_timetables(graph, courses, current_timetable, all_timetables)
-    if optimized :
+    if optimized==True :
         filtered_timetable=(optimized_timetable(all_timetables,graph))
         timeTable([filtered_timetable])
-    elif not course_preference:
-        timeTable(all_timetables)
     else:
         new_timetables = []
         for timetable in all_timetables:
