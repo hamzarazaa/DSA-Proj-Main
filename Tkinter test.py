@@ -15,15 +15,15 @@ def Gen_timetable():
     Bioscience=BioScience_combobox.get()
     if not(firstname and lastname and ID):
         tkinter.messagebox.showwarning(title="Error", message="First name, last name, and Student ID are required.")
-    if not DSA:
+    elif not DSA:
         tkinter.messagebox.showwarning(title="Error", message="Select your DSA Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
-    if not DM:
+    elif not DM:
         tkinter.messagebox.showwarning(title="Error", message="Select your DM Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
-    if not Calculus:
+    elif not Calculus:
         tkinter.messagebox.showwarning(title="Error", message="Select your Calculus Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
-    if not Mordernity:
+    elif not Mordernity:
         tkinter.messagebox.showwarning(title="Error", message="Select your Mordernity Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
-    if not Bioscience:
+    elif not Bioscience:
         tkinter.messagebox.showwarning(title="Error", message="Select your Bioscience Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
 ###FRONT END
 window = tkinter.Tk()
@@ -50,21 +50,6 @@ first_name_entry.grid(row=1, column=0)
 last_name_entry.grid(row=1, column=1)
 ID_entry.grid(row=1, column=2)
 
-# title_label = tkinter.Label(user_info_frame, text="Title")
-# title_combobox = ttk.Combobox(user_info_frame, values=["", "Mr.", "Ms.", "Dr."])
-# title_label.grid(row=0, column=2)
-# title_combobox.grid(row=1, column=2)
-
-# age_label = tkinter.Label(user_info_frame, text="Age")
-# age_spinbox = tkinter.Spinbox(user_info_frame, from_=18, to=110)
-# age_label.grid(row=2, column=0)
-# age_spinbox.grid(row=3, column=0)
-
-# nationality_label = tkinter.Label(user_info_frame, text="Nationality")
-# nationality_combobox = ttk.Combobox(user_info_frame, values=["Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"])
-# nationality_label.grid(row=2, column=1)
-# nationality_combobox.grid(row=3, column=1)
-
 for widget in user_info_frame.winfo_children():
     widget.grid_configure(padx=10, pady=5)
 
@@ -73,49 +58,30 @@ courses_frame = tkinter.LabelFrame(frame)
 courses_frame.grid(row=1, column=0, sticky="news", padx=20, pady=10)
 
 DSA_label = tkinter.Label(courses_frame, text="DSA")
-DSA_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','Salman, Muhammad','Saleem,Fahad'])
+DSA_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','Salman, Muhammad','Saleem,Fahad','Any Instructor'])
 DSA_label.grid(row=0, column=0)
 DSA_combobox.grid(row=0, column=1)
 
 DM_label = tkinter.Label(courses_frame, text="DM")
-DM_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','R.Ragib','A.Zafar'])
+DM_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','R.Ragib','A.Zafar','Any Instructor'])
 DM_label.grid(row=1, column=0)
 DM_combobox.grid(row=1, column=1)
 
 Calculus_label = tkinter.Label(courses_frame, text="Calculus II")
-Calculus_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','S.Rana','Y.Kerai'])
+Calculus_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','S.Rana','Y.Kerai','Any Instructor'])
 Calculus_label.grid(row=2, column=0)
 Calculus_combobox.grid(row=2, column=1)
 
 Mordernity_label = tkinter.Label(courses_frame, text="Mordernity")
-Mordernity_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','M.Patel','	H.Habib'])
+Mordernity_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','M.Patel','	H.Habib','Any Instructor'])
 Mordernity_label.grid(row=3, column=0)
 Mordernity_combobox.grid(row=3, column=1)
 
 BioScience_label = tkinter.Label(courses_frame, text="BioScience")
-BioScience_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','A.Nasir','J.Samad'])
+BioScience_combobox = ttk.Combobox(courses_frame, values=['Not to be enrolled','A.Nasir','J.Samad','Any Instructor'])
 BioScience_label.grid(row=4, column=0)
 BioScience_combobox.grid(row=4, column=1)
 
-
-# registered_label = tkinter.Label(courses_frame, text="Registration Status")
-
-# reg_status_var = tkinter.StringVar(value="Not Registered")
-# registered_check = tkinter.Checkbutton(courses_frame, text="Currently Registered",
-#                                        variable=reg_status_var, onvalue="Registered", offvalue="Not registered")
-
-# registered_label.grid(row=0, column=0)
-# registered_check.grid(row=1, column=0)
-
-# numcourses_label = tkinter.Label(courses_frame, text= "# Completed Courses")
-# numcourses_spinbox = tkinter.Spinbox(courses_frame, from_=0, to='infinity')
-# numcourses_label.grid(row=0, column=1)
-# numcourses_spinbox.grid(row=1, column=1)
-
-# numsemesters_label = tkinter.Label(courses_frame, text="# Semesters")
-# numsemesters_spinbox = tkinter.Spinbox(courses_frame, from_=0, to="infinity")
-# numsemesters_label.grid(row=0, column=2)
-# numsemesters_spinbox.grid(row=1, column=2)
 
 for widget in courses_frame.winfo_children():
     widget.grid_configure(padx=10, pady=5)
