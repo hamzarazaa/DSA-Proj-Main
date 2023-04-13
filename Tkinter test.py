@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 
 def Gen_timetable():
-    accepted = accept_var.get()
+    Optimized = accept_var.get()
     firstname = first_name_entry.get()
     lastname = last_name_entry.get()
     ID=ID_entry.get()
@@ -13,6 +13,7 @@ def Gen_timetable():
     DM=DM_combobox.get()
     Calculus=Calculus_combobox.get()
     Bioscience=BioScience_combobox.get()
+
     if not(firstname and lastname and ID):
         tkinter.messagebox.showwarning(title="Error", message="First name, last name, and Student ID are required.")
     elif not DSA:
@@ -25,6 +26,15 @@ def Gen_timetable():
         tkinter.messagebox.showwarning(title="Error", message="Select your Mordernity Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
     elif not Bioscience:
         tkinter.messagebox.showwarning(title="Error", message="Select your Bioscience Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+
+    Courses_Required={'DSA':DSA,'DM':DM,'Calculus':Calculus,'Mordernity':Mordernity,'Bioscience':Bioscience,'Optimized':Optimized}
+    for course in Courses_Required:
+        if Courses_Required[course]=='Not to be enrolled':
+            Courses_Required[course]=False
+        if Courses_Required[course]=='Any Instructor':
+            Courses_Required[course]=None
+##USE 'COURSES REQUIRED' FOR PROCESSING IN MAIN
+    print(Courses_Required)
 ###FRONT END
 window = tkinter.Tk()
 window.title("Data Entry Form")
