@@ -52,7 +52,9 @@ def is_valid_timetable(timetable, graph): # this code is the helper function and
     return True
 
 def timeTable(all_timetables): #This function just generates timetable in the console and will be removed as we make a UI for it
+    timeTables=[]
     for timetable in all_timetables:
+        current_timetable=[]
         for course in timetable:
             course_name, course_no = course, int(timetable[course])
             k = df.index.get_loc(df[df["Course No"] == int(course_no)].index[0])
@@ -64,8 +66,9 @@ def timeTable(all_timetables): #This function just generates timetable in the co
             thurs_str = f"Thursday {thurs}" if thurs != "0-0" else ""
             fri_str = f"Friday {fri}" if fri != "0-0" else ""
 
-            print(f"{course_name} - {course_no} - {course_instructor} : Timings => {mon_str} - {tues_str} - {wed_str} - {thurs_str} - {fri_str}")
-        print("\n"*2)
+            current_timetable.append(f"{course_name} - {course_no} - {course_instructor} : Timings => {mon_str} - {tues_str} - {wed_str} - {thurs_str} - {fri_str}")
+        timeTables.append(current_timetable)
+    # print(timeTables)
 def optimized_timetable(all_timetables, graph): # This function basically check for gaps between classes and the lowest amounts of gaps in a timetable will be returned
     optimized_timetable = None
     min_gaps = float('inf')
@@ -104,7 +107,9 @@ def main(courses_req,option): # This is the function that we have to turn into a
     generate_timetables(graph, courses, current_timetable, all_timetables)
     if int(option)==1 :
         filtered_timetable=(optimized_timetable(all_timetables,graph))
+        print(filtered_timetable)
         timeTable([filtered_timetable])
+        ########################################################################################################################
     else:
         new_timetables = []
         for timetable in all_timetables:
@@ -122,9 +127,11 @@ def main(courses_req,option): # This is the function that we have to turn into a
                 new_timetables.append(timetable)
 
         if len(new_timetables) == 0:
-            print("No timetables found that include all preferences")
+            print()
+            tkinter.messagebox.showwarning(title="Error", message="No timetables found that include all preferences")
         else:
             timeTable(new_timetables)
+##############################################################################################################
 courses={}
 option=""
 def Gen_timetable():
@@ -152,7 +159,7 @@ def Gen_timetable():
     elif not BioScience:
         tkinter.messagebox.showwarning(title="Error", message="Select your BioScience Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
 
-    Courses_Required={'DSA':DSA,'DM':DM,'Calculus':Calculus,'Modernity':Modernity,'BioScience':BioScience}
+    Courses_Required={'DSA':DSA,'DM':DM,'Calc':Calculus,'Modernity':Modernity,'Bio':BioScience}
     for course in Courses_Required:
         if Courses_Required[course]=='Not to be enrolled':
             Courses_Required[course]=False
@@ -239,3 +246,4 @@ button.grid(row=3, column=0, padx=20, pady=10)
  
 window.mainloop()
 main(courses,option)
+
