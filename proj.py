@@ -117,7 +117,7 @@ def main(courses_req,option): # This is the function that we have to turn into a
 courses={}
 option=""
 def Gen_timetable():
-    global courses,option
+    global courses, option
     Optimized = accept_var.get()
     firstname = first_name_entry.get()
     lastname = last_name_entry.get()
@@ -129,17 +129,23 @@ def Gen_timetable():
     BioScience=BioScience_combobox.get()
 
     if not(firstname and lastname and ID):
-        tkinter.messagebox.showwarning(title="Error", message="First name, last name, and Student ID are required.")
+        error_box = messagebox.showwarning(title="Error", message="First name, last name, and Student ID are required.")
+        window.wait_window(error_box)
     elif not DSA:
-        tkinter.messagebox.showwarning(title="Error", message="Select your DSA Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        error_box = messagebox.showwarning(title="Error", message="Select your DSA Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        window.wait_window(error_box)
     elif not DM:
-        tkinter.messagebox.showwarning(title="Error", message="Select your DM Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        error_box = messagebox.showwarning(title="Error", message="Select your DM Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        window.wait_window(error_box)
     elif not Calculus:
-        tkinter.messagebox.showwarning(title="Error", message="Select your Calculus Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        error_box = messagebox.showwarning(title="Error", message="Select your Calculus Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        window.wait_window(error_box)
     elif not Modernity:
-        tkinter.messagebox.showwarning(title="Error", message="Select your Modernity Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        error_box = messagebox.showwarning(title="Error", message="Select your Modernity Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        window.wait_window(error_box)
     elif not BioScience:
-        tkinter.messagebox.showwarning(title="Error", message="Select your BioScience Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        error_box = messagebox.showwarning(title="Error", message="Select your BioScience Instructor. Select 'Not to be enrolled' if you don't want to be enrolled in this course")
+        window.wait_window(error_box)
 
     Courses_Required={'DSA':DSA,'DM':DM,'Calc':Calculus,'Modernity':Modernity,'Bio':BioScience}
     for course in Courses_Required:
@@ -149,9 +155,7 @@ def Gen_timetable():
             Courses_Required[course]=None
     window.destroy()
     courses=Courses_Required
-    option=Optimized
-    # return courses
-    
+    option=Optimized    
 window = tkinter.Tk()
 window.title("Data Entry Form")
 
@@ -226,13 +230,14 @@ button.grid(row=3, column=0, padx=20, pady=10)
 window.mainloop()
 ##DISPLAY##
 def timeTable(all_timetables):
+    if all_timetables==[{}]: tkinter.messagebox.showwarning(title="Error", message="No timetables found that include all preferences")
     root = Tk()
     root.title("Timetables")
 
 
     style = ttk.Style()
-    style.configure("Treeview", background="#000000", foreground="#ffffff", fieldbackground="#f0f0f0")
-    style.configure("Treeview.Heading", font=("Helvetica", 12), background="#d3d3d3", foreground="#000000")
+    style.configure("Treeview", background="#2D5F6E", foreground="#f0f0f0", fieldbackground="#3E88A5")
+    style.configure("Treeview.Heading", font=("Helvetica", 12), background="#1e404a", foreground="#5F97AA")
   
     # Create a list of tables for each timetable
     tables = []
@@ -265,7 +270,7 @@ def timeTable(all_timetables):
         tables.append(table)
 
     current_table = 0
-    tables[current_table].grid(row=0, column=0, sticky="nsew")
+    tables[current_table].grid(row=0, column=1, sticky="nsew")
 
     def next_table():
         nonlocal current_table
@@ -274,9 +279,28 @@ def timeTable(all_timetables):
         if current_table == len(tables):
             root.destroy()
         else:
-            tables[current_table].grid(row=0, column=0, sticky="nsew")
-    next_button = ttk.Button(root, text="Next", command=next_table)
-    next_button.grid(row=1, column=0, pady=10)
+            tables[current_table].grid(row=0, column=1, sticky="nsew")
+        current_table_label.config(text=f"Timetable number {current_table + 1} of {len(tables)}")
+
+    def prev_table():
+        nonlocal current_table
+        tables[current_table].grid_forget()
+        current_table -= 1
+        if current_table < 0:
+            current_table = 0
+        tables[current_table].grid(row=0, column=1, sticky="nsew")
+        current_table_label.config(text=f"Timetable number {current_table + 1} of {len(tables)}")
+
+    
+    prev_button = ttk.Button(root, text="<Prev", command=prev_table)
+    prev_button.grid(row=1, column=0, pady=10, padx=10)
+
+    current_table_label = ttk.Label(root, text=f"Timetable number {current_table + 1} of {len(tables)}")
+    current_table_label.grid(row=1, column=1, pady=10)
+
+    next_button = ttk.Button(root, text="Next>", command=next_table)
+    next_button.grid(row=1, column=2, pady=10, padx=10)
+    
     root.mainloop()
 
 
