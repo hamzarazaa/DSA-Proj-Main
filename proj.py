@@ -50,60 +50,6 @@ def is_valid_timetable(timetable, graph): # this code is the helper function and
                         return False
 
     return True
-def timeTable(all_timetables):
-    root = Tk()
-    root.title("Timetables")
-
-
-    style = ttk.Style()
-    style.configure("Treeview", background="#000000", foreground="#ffffff", fieldbackground="#f0f0f0")
-    style.configure("Treeview.Heading", font=("Helvetica", 12), background="#d3d3d3", foreground="#000000")
-  
-    # Create a list of tables for each timetable
-    tables = []
-    for timetable in all_timetables:
-        table = ttk.Treeview(root, style='Treeview')
-        table["columns"] = ("Course", "Section", "Instructor", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-        table.heading("Course", text="Course")
-        table.heading("Section", text="Section")
-        table.heading("Instructor", text="Instructor")
-        table.heading("Monday", text="Monday")
-        table.heading("Tuesday", text="Tuesday")
-        table.heading("Wednesday", text="Wednesday")
-        table.heading("Thursday", text="Thursday")
-        table.heading("Friday", text="Friday")
-        table.column("#0", width=0, stretch=NO)
-        table.column("Course", width=100, anchor=CENTER)
-        table.column("Section", width=100, anchor=CENTER)
-        table.column("Instructor", width=150, anchor=CENTER)
-        table.column("Monday", width=100, anchor=CENTER)
-        table.column("Tuesday", width=100, anchor=CENTER)
-        table.column("Wednesday", width=100, anchor=CENTER)
-        table.column("Thursday", width=100, anchor=CENTER)
-        table.column("Friday", width=100, anchor=CENTER)
-        for course, section in timetable.items():
-            course_name, course_no = course, int(section)
-            k = df.index.get_loc(df[df["Course No"] == course_no].index[0])
-            row = df.iloc[k]
-            course_instructor,mon,tues,wed,thurs,fri=row["Instructor"],row["Monday"],row["Tuesday"],row["Wednesday"],row["Thursday"],row["Friday"]
-            table.insert("", "end", text="", values=(course_name, course_no, course_instructor, mon, tues, wed, thurs, fri))
-        tables.append(table)
-
-    current_table = 0
-    tables[current_table].grid(row=0, column=0, sticky="nsew")
-
-    def next_table():
-        nonlocal current_table
-        tables[current_table].grid_forget()
-        current_table += 1
-        if current_table == len(tables):
-            root.destroy()
-        else:
-            tables[current_table].grid(row=0, column=0, sticky="nsew")
-    next_button = ttk.Button(root, text="Next", command=next_table)
-    next_button.grid(row=1, column=0, pady=10)
-    root.mainloop()
-
 
 
 def optimized_timetable(all_timetables, graph): # This function basically check for gaps between classes and the lowest amounts of gaps in a timetable will be returned
@@ -167,7 +113,7 @@ def main(courses_req,option): # This is the function that we have to turn into a
             tkinter.messagebox.showwarning(title="Error", message="No timetables found that include all preferences")
         else:
             timeTable(new_timetables)
-
+##FRONT END##
 courses={}
 option=""
 def Gen_timetable():
@@ -206,9 +152,6 @@ def Gen_timetable():
     option=Optimized
     # return courses
     
-##USE 'COURSES REQUIRED' FOR PROCESSING IN MAIN
-    
-###FRONT END
 window = tkinter.Tk()
 window.title("Data Entry Form")
 
@@ -281,4 +224,60 @@ button = tkinter.Button(frame, text="Generate Timetable", command= Gen_timetable
 button.grid(row=3, column=0, padx=20, pady=10)
  
 window.mainloop()
+##DISPLAY##
+def timeTable(all_timetables):
+    root = Tk()
+    root.title("Timetables")
+
+
+    style = ttk.Style()
+    style.configure("Treeview", background="#000000", foreground="#ffffff", fieldbackground="#f0f0f0")
+    style.configure("Treeview.Heading", font=("Helvetica", 12), background="#d3d3d3", foreground="#000000")
+  
+    # Create a list of tables for each timetable
+    tables = []
+    for timetable in all_timetables:
+        table = ttk.Treeview(root, style='Treeview')
+        table["columns"] = ("Course", "Section", "Instructor", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+        table.heading("Course", text="Course")
+        table.heading("Section", text="Section")
+        table.heading("Instructor", text="Instructor")
+        table.heading("Monday", text="Monday")
+        table.heading("Tuesday", text="Tuesday")
+        table.heading("Wednesday", text="Wednesday")
+        table.heading("Thursday", text="Thursday")
+        table.heading("Friday", text="Friday")
+        table.column("#0", width=0, stretch=NO)
+        table.column("Course", width=100, anchor=CENTER)
+        table.column("Section", width=100, anchor=CENTER)
+        table.column("Instructor", width=150, anchor=CENTER)
+        table.column("Monday", width=100, anchor=CENTER)
+        table.column("Tuesday", width=100, anchor=CENTER)
+        table.column("Wednesday", width=100, anchor=CENTER)
+        table.column("Thursday", width=100, anchor=CENTER)
+        table.column("Friday", width=100, anchor=CENTER)
+        for course, section in timetable.items():
+            course_name, course_no = course, int(section)
+            k = df.index.get_loc(df[df["Course No"] == course_no].index[0])
+            row = df.iloc[k]
+            course_instructor,mon,tues,wed,thurs,fri=row["Instructor"],row["Monday"],row["Tuesday"],row["Wednesday"],row["Thursday"],row["Friday"]
+            table.insert("", "end", text="", values=(course_name, course_no, course_instructor, mon, tues, wed, thurs, fri))
+        tables.append(table)
+
+    current_table = 0
+    tables[current_table].grid(row=0, column=0, sticky="nsew")
+
+    def next_table():
+        nonlocal current_table
+        tables[current_table].grid_forget()
+        current_table += 1
+        if current_table == len(tables):
+            root.destroy()
+        else:
+            tables[current_table].grid(row=0, column=0, sticky="nsew")
+    next_button = ttk.Button(root, text="Next", command=next_table)
+    next_button.grid(row=1, column=0, pady=10)
+    root.mainloop()
+
+
 main(courses,option)
